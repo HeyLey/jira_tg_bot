@@ -3,7 +3,7 @@ import os
 import requests
 from telegram.ext import CommandHandler, RegexHandler, Updater
 
-from config import URL, PORT, USER_ID
+from config import URL, PORT, USER_ID, JIRA_TOKEN
 from utils import format_thousands
 
 
@@ -38,13 +38,20 @@ class Bot:
     def _send(self, bot, update):
         user_id = str(update.message.from_user.id)
         if user_id == USER_ID:
-            update.message.reply_text(update.message.text)
+            headers = {'Authorization': 'Basic {}'.format(JIRA_TOKEN)}
+            data = {
+                "fields":{"project":{"key": "NOTIFY"},
+                          "assignee":{"name":"lkhatbullina"},
+                          "priority": {"name": "Lowest"},
+                          "summary": update.message.text[len("/send "):],
+                          "issuetype":{"name": "Task"}
+                          }
+            }
+            url = "https://jira.iponweb.net/rest/api/2/issue/"
+            response = self._session.post(url, headers=headers, data=data)
+
+            update.message.reply_text(str(response.status_code) + "\n" + response.test)
 
     def _help(self, bot, update):
         update.message.reply_text('Help!')
-    
-    def _get_info(self, name):
-        url = "https://api.coinmarketcap.com/v1/ticker/{}"
 
-        response = self._session.get(url.format(name))
-        return response.json()[0]
