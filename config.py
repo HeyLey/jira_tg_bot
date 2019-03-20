@@ -8,3 +8,5 @@ PORT = int(os.environ.get('PORT', '5000'))
 TOKEN = os.environ.get('TOKEN')
 
 USER_ID = os.environ.get('USER_ID')
+
+JIRA_TOKEN = os.environ.get('JIRA_TOKEN')

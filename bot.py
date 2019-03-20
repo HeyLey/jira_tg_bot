@@ -3,14 +3,12 @@ import os
 import requests
 from telegram.ext import CommandHandler, RegexHandler, Updater
 
-from config import URL, PORT
+from config import URL, PORT, USER_ID
 from utils import format_thousands
 
 
 class Bot:
     def __init__(self, token, debug=False):
-        print('Hello')
-        print(token)
         self._token = token
         self._updater = Updater(token)
         self._debug = debug
@@ -28,23 +26,22 @@ class Bot:
     def _init_handlers(self):
         self._updater.dispatcher.add_handler(CommandHandler("start", self._start))
         self._updater.dispatcher.add_handler(CommandHandler("help", self._help))
+        self._updater.dispatcher.add_handler(CommandHandler("send", self._send))
 
     def _start(self, bot, update):
         user_id = update.message.from_user.id
-        print(user_id)
-        update.message.reply_text('Hi! {}'.format(user_id))
+        if user_id == USER_ID:
+            update.message.reply_text('Hello, Leyla! :)')
+        else:
+            update.message.reply_text('Who are you?')
+
+    def _send(self, bot, update):
+        user_id = update.message.from_user.id
+        if user_id == USER_ID:
+            update.message.reply_text(update.message.text)
 
     def _help(self, bot, update):
         update.message.reply_text('Help!')
-
-    def _get_currency_price(self, bot, update, groups):
-        currency = groups[0]
-    
-        info = self._get_info(currency.replace("_", "-"))
-    
-        text = "Current {} price - ${}".format(info["name"], format_thousands(info["price_usd"], sep=" "))
-    
-        bot.send_message(chat_id=update.message.chat_id, text=text)
     
     def _get_info(self, name):
         url = "https://api.coinmarketcap.com/v1/ticker/{}"
