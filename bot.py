@@ -40,17 +40,19 @@ class Bot:
         if user_id == USER_ID:
             headers = {'Authorization': 'Basic {}'.format(JIRA_TOKEN)}
             data = {
-                "fields":{"project":{"key": "NOTIFY"},
-                          "assignee":{"name":"lkhatbullina"},
+                "fields":{"project": {"key": "NOTIFY"},
+                          "assignee": {"name":"lkhatbullina"},
                           "priority": {"name": "Lowest"},
                           "summary": update.message.text[len("/send "):],
-                          "issuetype":{"name": "Task"}
+                          "issuetype": {"name": "Task"}
                           }
             }
             url = "https://jira.iponweb.net/rest/api/2/issue/"
             response = self._session.post(url, headers=headers, data=data)
+            print(response.status_code)
+            print(response.text)
 
-            update.message.reply_text(str(response.status_code) + "\n" + response.test)
+            update.message.reply_text(str(response.status_code) + "\n" + response.text)
 
     def _help(self, bot, update):
         update.message.reply_text('Help!')
