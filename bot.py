@@ -50,7 +50,7 @@ class Bot:
                           }
             }
             url = "https://jira.iponweb.net/rest/api/2/issue/"
-            response = self._session.post(url, headers=headers, data=data)
+            response = self._session.post(url, headers=headers, json=data)
             print(response.status_code)
             print(response.text)
 
