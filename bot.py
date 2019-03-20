@@ -30,7 +30,9 @@ class Bot:
         self._updater.dispatcher.add_handler(CommandHandler("help", self._help))
 
     def _start(self, bot, update):
-        update.message.reply_text('Hi!')
+        user_id = update.message.from_user.id
+        print(user_id)
+        update.message.reply_text('Hi! {}'.format(user_id))
 
     def _help(self, bot, update):
         update.message.reply_text('Help!')
