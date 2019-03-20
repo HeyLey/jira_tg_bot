@@ -9,6 +9,8 @@ from utils import format_thousands
 
 class Bot:
     def __init__(self, token, debug=False):
+        print('Hello')
+        print(token)
         self._token = token
         self._updater = Updater(token)
         self._debug = debug
