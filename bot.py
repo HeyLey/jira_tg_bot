@@ -29,14 +29,14 @@ class Bot:
         self._updater.dispatcher.add_handler(CommandHandler("send", self._send))
 
     def _start(self, bot, update):
-        user_id = update.message.from_user.id
+        user_id = str(update.message.from_user.id)
         if user_id == USER_ID:
             update.message.reply_text('Hello, Leyla! :)')
         else:
-            update.message.reply_text('Who are you?')
+            update.message.reply_text('Who are you? {}'.format(user_id))
 
     def _send(self, bot, update):
-        user_id = update.message.from_user.id
+        user_id = str(update.message.from_user.id)
         if user_id == USER_ID:
             update.message.reply_text(update.message.text)
 
