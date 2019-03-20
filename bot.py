@@ -39,11 +39,13 @@ class Bot:
         user_id = str(update.message.from_user.id)
         if user_id == USER_ID:
             headers = {'Authorization': 'Basic {}'.format(JIRA_TOKEN)}
+            summary = update.message.text[len("/send "):]
+            print("Summary: " + summary)
             data = {
                 "fields":{"project": {"key": "NOTIFY"},
                           "assignee": {"name":"lkhatbullina"},
                           "priority": {"name": "Lowest"},
-                          "summary": update.message.text[len("/send "):],
+                          "summary": summary,
                           "issuetype": {"name": "Task"}
                           }
             }
