@@ -1,7 +1,7 @@
 import os
 
 import requests
-from telegram.ext import RegexHandler, Updater
+from telegram.ext import CommandHandler, RegexHandler, Updater
 
 from config import URL, PORT
 from utils import format_thousands
@@ -26,9 +26,14 @@ class Bot:
         self._updater.idle()
     
     def _init_handlers(self):
-        self._updater.dispatcher.add_handler(
-            RegexHandler("^/([a-z_]+)$", self._get_currency_price,
-                         pass_groups=True))
+        self._updater.dispatcher.add_handler(CommandHandler("start", self._start))
+        self._updater.dispatcher.add_handler(CommandHandler("help", self._help))
+
+    def _start(self, bot, update):
+        update.message.reply_text('Hi!')
+
+    def _help(self, bot, update):
+        update.message.reply_text('Help!')
 
     def _get_currency_price(self, bot, update, groups):
         currency = groups[0]
