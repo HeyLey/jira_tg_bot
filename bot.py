@@ -4,7 +4,6 @@ import requests
 from telegram.ext import CommandHandler, RegexHandler, Updater
 
 from config import URL, PORT, USER_ID, JIRA_TOKEN
-from utils import format_thousands
 
 
 class Bot:
@@ -43,7 +42,7 @@ class Bot:
             print("Summary: " + summary)
             data = {
                 "fields":{"project": {"key": "NOTIFY"},
-                          "assignee": {"name":"lkhatbullina"},
+                          "assignee": {"name":"azotov"},
                           "priority": {"name": "Lowest"},
                           "summary": summary,
                           "issuetype": {"name": "Task"}
