@@ -3,7 +3,7 @@ import os
 import requests
 from telegram.ext import CommandHandler, RegexHandler, Updater
 
-from config import URL, PORT, USER_ID, JIRA_TOKEN
+from config import URL, PORT, USER_ID, JIRA_TOKEN, JIRA_URL
 
 
 class Bot:
@@ -48,7 +48,7 @@ class Bot:
                           "issuetype": {"name": "Task"}
                           }
             }
-            url = "https://jira.iponweb.net/rest/api/2/issue/"
+            url = JIRA_URL
             response = self._session.post(url, headers=headers, json=data)
             print(response.status_code)
             print(response.text)
