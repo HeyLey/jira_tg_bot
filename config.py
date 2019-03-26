@@ -12,3 +12,7 @@ USER_ID = os.environ.get('USER_ID')
 JIRA_TOKEN = os.environ.get('JIRA_TOKEN')
 
 JIRA_URL = os.environ.get('JIRA_URL')
+
+DATA = os.environ.get('DATA')
+
+

@@ -3,7 +3,7 @@ import os
 import requests
 from telegram.ext import CommandHandler, RegexHandler, Updater
 
-from config import URL, PORT, USER_ID, JIRA_TOKEN, JIRA_URL
+from config import URL, PORT, USER_ID, JIRA_TOKEN, JIRA_URL, DATA
 
 
 class Bot:
@@ -40,14 +40,7 @@ class Bot:
             headers = {'Authorization': 'Basic {}'.format(JIRA_TOKEN)}
             summary = update.message.text[len("/send "):]
             print("Summary: " + summary)
-            data = {
-                "fields":{"project": {"key": "NOTIFY"},
-                          "assignee": {"name":"azotov"},
-                          "priority": {"name": "Lowest"},
-                          "summary": summary,
-                          "issuetype": {"name": "Task"}
-                          }
-            }
+            data = DATA
             url = JIRA_URL
             response = self._session.post(url, headers=headers, json=data)
             print(response.status_code)
